@@ -37,7 +37,11 @@ module JavaBuildpack
     def link_to(source, destination)
       puts "Entering link_to"
       FileUtils.mkdir_p destination
-      source.each { |path| (destination + path.basename).make_symlink(path.relative_path_from(destination)) }
+      #source.each { |path| (destination + path.basename).make_symlink(path.relative_path_from(destination)) }
+      source.each do |path|
+        puts "Making symlink #{destination + path.basename}"
+        (destination + path.basename).make_symlink(path.relative_path_from(destination))
+      end
     end
 
     # Read an XML file into a +REXML::Document+
