@@ -61,11 +61,13 @@ module JavaBuildpack
     #
     # @return [Void]
     def compile
+      puts "Entering compile"
       puts BUILDPACK_MESSAGE % @buildpack_version
 
       container = component_detection('container', @containers, true).first
+      puts "container = #{container}"
       no_container unless container
-
+      puts "About to enter component compile"
       component_detection('JRE', @jres, true).first.compile
       component_detection('framework', @frameworks, false).each(&:compile)
 

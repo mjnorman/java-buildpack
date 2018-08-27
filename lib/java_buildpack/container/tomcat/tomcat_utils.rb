@@ -35,6 +35,7 @@ module JavaBuildpack
     # @param [Pathname] destination the destination directory to link to
     # @return [Void]
     def link_to(source, destination)
+      puts "Entering link_to"
       FileUtils.mkdir_p destination
       source.each { |path| (destination + path.basename).make_symlink(path.relative_path_from(destination)) }
     end
