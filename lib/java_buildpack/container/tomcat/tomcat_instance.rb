@@ -106,7 +106,10 @@ module JavaBuildpack
         context_path = (@configuration['context_path'] || 'ROOT').sub(%r{^/}, '').gsub(%r{/}, '#')
         #tomcat_webapps + context_path
         puts "tomcat_webapps = #{tomcat_webapps}"
-        tomcat_webapps
+        if @configuration['multiwar']
+          tomcat_webapps
+        else
+          tomcat_webapps + context_path
       end
 
       def tomcat_datasource_jar

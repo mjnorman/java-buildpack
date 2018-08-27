@@ -70,7 +70,9 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::ModularComponent#supports?)
       def supports?
-        web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
+        #shortcircuit supports? to always be true for time being, ugly
+        #web_inf? && !JavaBuildpack::Util::JavaMainUtils.main_class(@application)
+        true
       end
 
       private
