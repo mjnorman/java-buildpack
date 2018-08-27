@@ -104,21 +104,12 @@ module JavaBuildpack
       end
 
       def root
+        #always make webapps the root
         puts "entering tomcat_instance:root"
         context_path = (@configuration['context_path'] || 'ROOT').sub(%r{^/}, '').gsub(%r{/}, '#')
         #tomcat_webapps + context_path
-        puts "tomcat_webapps = #{tomcat_webapps}"
-        tomcat_configuration = @configuration['tomcat']
-        puts "tomcat_configuration = #{tomcat_configuration}"
-        multiwar = @tomcat_configuration['multiwar']
-        puts "multiwar = #{@configuration['multiwar']}"
-        if multiwar
-          puts "root should be equal to #{tomcat_webapps}"
-          tomcat_webapps
-        else
-          puts "root should be equal to #{tomcat_webapps + context_path}"
-          tomcat_webapps + context_path
-        end
+        puts "root should be equal to #{tomcat_webapps}"
+        tomcat_webapps
       end
 
       def tomcat_datasource_jar
