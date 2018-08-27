@@ -111,6 +111,7 @@ module JavaBuildpack
           tomcat_webapps
         else
           tomcat_webapps + context_path
+        end
       end
 
       def tomcat_datasource_jar
