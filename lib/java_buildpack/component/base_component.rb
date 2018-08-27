@@ -44,6 +44,7 @@ module JavaBuildpack
         @component_name = self.class.to_s.space_case
         @configuration  = context[:configuration]
         @droplet        = context[:droplet]
+        puts "base component config = #{configuration}"
       end
 
       # If the component should be used when staging an application
