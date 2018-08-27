@@ -37,7 +37,6 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        puts "Entering component compile"
         download(@version, @uri) { |file| expand file }
         link_to(@application.root.children, root)
         @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
