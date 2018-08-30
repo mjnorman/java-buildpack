@@ -40,7 +40,7 @@ module JavaBuildpack
       def compile
         @logger.debug { "Entering component compile".white.bold }
         download(@version, @uri) { |file| expand file }
-        application_wars(@application.root.children) { |file| expand file }
+        process_wars
         link_to(@application.root.children, root)
         @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
         @droplet.additional_libraries.link_to web_inf_lib
@@ -110,12 +110,28 @@ module JavaBuildpack
       end
 
       def application_wars(files)
+        s = Set.new
         @logger.debug { "Entering application_wars".white.bold }
         files.each { |file|
           iswar = File.extname(file).eql? '.war'
           @logger.debug { "Checking #{file} == '.war'......#{iswar}".white.bold }
-          expand(file) if File.extname(file).eql? '.war' 
+          s << file if iswar
         }
+        s
+      end
+
+      def expand_war(file)
+        @logger.debug { "Entering expand_war with #{file}".white.bold }
+        dirpath = @droplet.root + File.basename(file)
+        @logger.debug { "Making directory #{dirpath}".white.bold }
+        FileUtils.mkdir_p dirpath
+        @logger.debug { "Extracting war into #{@droplet.root + File.basename(file)}".white.bold }
+        shell "tar xzf #{file.path} -C #{@droplet.sandbox} --strip 1 --exclude webapps 2>&1"
+      end
+
+      def process_wars
+        @logger.debug { "Entering process_wars".white.bold }
+        application_wars(@application.root.children).each { |file| expand_war file }
       end
 
       def root
