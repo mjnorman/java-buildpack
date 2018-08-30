@@ -106,7 +106,11 @@ module JavaBuildpack
 
       def application_wars(files)
         puts "Entering application_wars"
-        files.each { |file| expand(file) if File.extname(file).eql? '.war' }
+        files.each { |file|
+          iswar = File.extname(file).eql? '.war'
+          puts "Checking #{file} == '.war'......#{iswar}"
+          expand(file) if File.extname(file).eql? '.war' 
+        }
       end
 
       def root
