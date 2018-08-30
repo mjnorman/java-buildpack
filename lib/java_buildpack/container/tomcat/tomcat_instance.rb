@@ -39,6 +39,7 @@ module JavaBuildpack
       def compile
         puts "Entering component compile"
         download(@version, @uri) { |file| expand file }
+        application_wars { |file| expand file }
         link_to(@application.root.children, root)
         @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
         @droplet.additional_libraries.link_to web_inf_lib
@@ -101,6 +102,10 @@ module JavaBuildpack
           configure_linking
           configure_jasper
         end
+      end
+
+      def application_wars(files)
+        files.each { |file| expand(file) if File.extname(file).eql? '.war' }
       end
 
       def root
