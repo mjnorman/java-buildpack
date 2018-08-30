@@ -33,6 +33,7 @@ module JavaBuildpack
       # @param [Hash] context a collection of utilities used the component
       def initialize(context)
         super(context) { |candidate_version| candidate_version.check_size(3) }
+        @logger            = Logging::LoggerFactory.instance.get_logger TomcatInstance
       end
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
