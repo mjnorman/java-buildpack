@@ -37,7 +37,7 @@ module JavaBuildpack
 
       # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
-        puts "Entering component compile"
+        @logger.debug { "Entering component compile".white.bold }
         download(@version, @uri) { |file| expand file }
         application_wars(@application.root.children) { |file| expand file }
         link_to(@application.root.children, root)
@@ -94,14 +94,14 @@ module JavaBuildpack
       end
 
       def expand(file)
-        puts "Entering expand(#{file})"
+        @logger.debug { "Entering expand(#{file})".white.bold }
         with_timing "Expanding #{@component_name} to #{@droplet.sandbox.relative_path_from(@droplet.root)}" do
-          puts "Making directory #{@droplet.sandbox}"
+          @logger.debug { "Making directory #{@droplet.sandbox}".white.bold }
           FileUtils.mkdir_p @droplet.sandbox
-          puts "Expanding file into #{@droplet.sandbox}"
+          @logger.debug { "Expanding file into #{@droplet.sandbox}".white.bold }
           shell "tar xzf #{file.path} -C #{@droplet.sandbox} --strip 1 --exclude webapps 2>&1"
 
-          puts "Copying Resources"
+          @logger.debug { "Copying Resources".white.bold }
           @droplet.copy_resources
           configure_linking
           configure_jasper
@@ -109,20 +109,20 @@ module JavaBuildpack
       end
 
       def application_wars(files)
-        puts "Entering application_wars"
+        @logger.debug { "Entering application_wars".white.bold }
         files.each { |file|
           iswar = File.extname(file).eql? '.war'
-          puts "Checking #{file} == '.war'......#{iswar}"
+          @logger.debug { "Checking #{file} == '.war'......#{iswar}".white.bold }
           expand(file) if File.extname(file).eql? '.war' 
         }
       end
 
       def root
         #always make webapps the root
-        puts "entering tomcat_instance:root"
+        @logger.debug { "Entering tomcat_instance:root".white.bold }
         context_path = (@configuration['context_path'] || 'ROOT').sub(%r{^/}, '').gsub(%r{/}, '#')
         #tomcat_webapps + context_path
-        puts "root should be equal to #{tomcat_webapps}"
+        @logger.debug { "Root should be equal to #{tomcat_webapps}".white.bold }
         tomcat_webapps
       end
 
