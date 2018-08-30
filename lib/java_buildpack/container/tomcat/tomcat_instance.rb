@@ -122,10 +122,12 @@ module JavaBuildpack
 
       def expand_war(file)
         @logger.debug { "Entering expand_war with #{file}".white.bold }
-        dirpath = @droplet.root + File.basename(file, File.extname(file))
-        @logger.debug { "Making directory dirpath = #{dirpath}, file = #{file}".white.bold }
+        file_basename = File.basename(file, File.extname(file))
+        dirpath = @droplet.root + file_basename
+        @logger.debug { "Making directory dirpath = #{dirpath}, file = #{file_basename}".white.bold }
         FileUtils.mkdir_p dirpath
-        @logger.debug { "Extracting war into #{@droplet.root + File.basename(file)}".white.bold }
+        @logger.debug { "Extracting war into #{@droplet.root + file_basename}".white.bold }
+        @logger.debug { "shell command is -- shell 'tar xzf #{file} -C #{dirpath} --strip 2>&1'"}
         shell "tar xzf #{file} -C #{dirpath} --strip 1 2>&1"
       end
 
