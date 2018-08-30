@@ -95,11 +95,11 @@ module JavaBuildpack
       end
 
       def expand(file)
-        @logger.debug { "Entering expand(#{file})".white.bold }
+        @logger.debug { "Entering expand(#{file.path})".white.bold }
         with_timing "Expanding #{@component_name} to #{@droplet.sandbox.relative_path_from(@droplet.root)}" do
           @logger.debug { "Making directory #{@droplet.sandbox}".white.bold }
           FileUtils.mkdir_p @droplet.sandbox
-          @logger.debug { "Expanding file into #{@droplet.sandbox}".white.bold }
+          @logger.debug { "Expanding #{file.path} into #{@droplet.sandbox}".white.bold }
           shell "tar xzf #{file.path} -C #{@droplet.sandbox} --strip 1 --exclude webapps 2>&1"
 
           @logger.debug { "Copying Resources".white.bold }
