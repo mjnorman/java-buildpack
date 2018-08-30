@@ -127,8 +127,8 @@ module JavaBuildpack
         @logger.debug { "Making directory dirpath = #{dirpath}, file = #{file_basename}".white.bold }
         FileUtils.mkdir_p dirpath
         @logger.debug { "Extracting war into #{@droplet.root + file_basename}".white.bold }
-        @logger.debug { "shell command is -- shell 'tar xzf #{file} -C #{dirpath} --strip 2>&1'"}
-        shell "tar xzf #{file} -C #{dirpath} --strip 1 2>&1"
+        @logger.debug { "shell command is -- unzip -qq #{file} -d #{dirpath}'"}
+        shell "unzip -qq #{file} -d #{dirpath} 2>&1"
       end
 
       def process_wars
