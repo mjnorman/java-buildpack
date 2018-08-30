@@ -61,7 +61,7 @@ module JavaBuildpack
     #
     # @return [Void]
     def compile
-      puts "Entering compile"
+      @logger.debug { "Entering compile".white.bold }
       puts BUILDPACK_MESSAGE % @buildpack_version
 
       container = component_detection('container', @containers, true).first
