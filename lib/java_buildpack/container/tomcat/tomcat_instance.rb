@@ -96,9 +96,12 @@ module JavaBuildpack
       def expand(file)
         puts "Entering expand(#{file})"
         with_timing "Expanding #{@component_name} to #{@droplet.sandbox.relative_path_from(@droplet.root)}" do
+          puts "Making directory #{@droplet.sandbox}"
           FileUtils.mkdir_p @droplet.sandbox
+          puts "Expanding file into #{@droplet.sandbox}"
           shell "tar xzf #{file.path} -C #{@droplet.sandbox} --strip 1 --exclude webapps 2>&1"
 
+          puts "Copying Resources"
           @droplet.copy_resources
           configure_linking
           configure_jasper
