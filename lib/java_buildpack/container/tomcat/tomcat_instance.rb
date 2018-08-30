@@ -122,7 +122,7 @@ module JavaBuildpack
 
       def expand_war(file)
         @logger.debug { "Entering expand_war with #{file}".white.bold }
-        dirpath = @droplet.root + File.basename(file)
+        dirpath = @droplet.root + File.basename(file, File.extname(file))
         @logger.debug { "Making directory #{dirpath}".white.bold }
         FileUtils.mkdir_p dirpath
         @logger.debug { "Extracting war into #{@droplet.root + File.basename(file)}".white.bold }
