@@ -42,6 +42,7 @@ module JavaBuildpack
       source.each do |path|
         @logger.debug { "Making symlink #{destination + path.basename}".white.bold }
         (destination + path.basename).make_symlink(path.relative_path_from(destination))
+        shell "ls -al #{destination}"
       end
     end
 
