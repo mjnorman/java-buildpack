@@ -28,12 +28,12 @@ module JavaBuildpack
       #
       # @param [Object] args The command to run
       # @return [Void]
-      def shell(*args = '', printout = false)
+      def shell(*args)
         Open3.popen3(*args) do |_stdin, stdout, stderr, wait_thr|
 
           Thread.new do 
             stdout.each { |line| puts line.white.bold }
-          end if printout
+          end
 
           out = stdout.gets nil
           err = stderr.gets nil
@@ -45,7 +45,7 @@ module JavaBuildpack
 
             raise
           end
-        end unless args.empty?
+        end
       end
 
     end
