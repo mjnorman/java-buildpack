@@ -87,6 +87,7 @@ module JavaBuildpack
       value = `echo is this thing working`
       @logger.debug { value.white.bold }
       value = `ls -al /tmp/app/.java-buildpack/tomcat/webapps`
+      value = `pwd`
       @logger.debug { value.white.bold }
       container = component_detection('container', @containers, true).first
       no_container unless container
