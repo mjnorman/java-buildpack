@@ -111,6 +111,9 @@ module JavaBuildpack
         'default_process_types' => { 'web' => command, 'task' => command }
       }.to_yaml
 
+      value = `ls -al /home/vcap/app`
+      @logger.debug { value.white.bold }
+
       @logger.debug { "Release Payload:\n#{payload}" }
 
       payload
