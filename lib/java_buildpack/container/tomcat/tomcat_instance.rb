@@ -43,9 +43,9 @@ module JavaBuildpack
         #process_wars
         link_to(@application.root.children, root)
         @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
-        shell "ls -al #{tomcat_webapps}", true
+        shell "ls -al #{tomcat_webapps}"
         @droplet.additional_libraries.link_to web_inf_lib
-        shell "ls -al #{tomcat_webapps}", true
+        shell "ls -al #{tomcat_webapps}"
       end
 
       # (see JavaBuildpack::Component::BaseComponent#release)
