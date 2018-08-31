@@ -36,7 +36,7 @@ require 'java_buildpack/util/snake_case'
 require 'java_buildpack/util/space_case'
 require 'pathname'
 require 'java_buildpack/util'
-require 'java_buildpack/util/shell'
+require 'open3'
 
 module JavaBuildpack
 
@@ -84,7 +84,7 @@ module JavaBuildpack
     # @return [String] The payload required to run the application.
     def release
       @logger.debug { "Entering release".white.bold }
-      `ls -al /tmp/app/.java-buildpack/tomcat/webapps`
+      shell "ls -al /tmp/app/.java-buildpack/tomcat/webapps"
       container = component_detection('container', @containers, true).first
       no_container unless container
 
@@ -251,6 +251,26 @@ module JavaBuildpack
     def tag_detection(type, components, unique)
       _detected, tags = detection type, components, unique
       tags
+    end
+
+    def shell(*args)
+      Open3.popen3(*args) do |_stdin, stdout, stderr, wait_thr|
+
+        Thread.new do 
+          stdout.each { |line| puts line.white.bold }
+        end
+
+        out = stdout.gets nil
+        err = stderr.gets nil
+
+        unless wait_thr.value.success?
+          puts "\nCommand '#{args.join ' '}' has failed"
+          puts "STDOUT: #{out}"
+          puts "STDERR: #{err}"
+
+          raise
+        end
+      end
     end
 
     class << self
