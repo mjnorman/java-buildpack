@@ -83,7 +83,7 @@ module JavaBuildpack
     # @return [String] The payload required to run the application.
     def release
       @logger.debug { "Entering release".white.bold }
-      shell "ls -al #{@droplet.sandbox + webapps} "
+      shell "ls -al /tmp/app/.java-buildpack/tomcat/webapps "
       container = component_detection('container', @containers, true).first
       no_container unless container
 
