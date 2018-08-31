@@ -41,7 +41,7 @@ module JavaBuildpack
         @logger.debug { "Entering component compile".white.bold }
         download(@version, @uri) { |file| expand file }
         #process_wars
-        #link_to(@application.root.children, root)
+        link_to(@application.root.children, root)
         @droplet.additional_libraries << tomcat_datasource_jar if tomcat_datasource_jar.exist?
         @droplet.additional_libraries.link_to web_inf_lib
       end
