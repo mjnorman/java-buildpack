@@ -3,3 +3,5 @@
 .yardoc
 build/
 doc
+.vscode
+Gem.lock

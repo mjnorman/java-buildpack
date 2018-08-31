@@ -28,15 +28,15 @@ module JavaBuildpack
       #
       # @param [Object] args The command to run
       # @return [Void]
-      def shell(*args)
+      def shell(*args, printout = false)
         Open3.popen3(*args) do |_stdin, stdout, stderr, wait_thr|
-          #out = stdout.gets nil
-          #err = stderr.gets nil
 
           Thread.new do 
             stdout.each { |line| puts line.white.bold }
-            
-          end
+          end if printout
+
+          out = stdout.gets nil
+          err = stderr.gets nil
 
           unless wait_thr.value.success?
             puts "\nCommand '#{args.join ' '}' has failed"
