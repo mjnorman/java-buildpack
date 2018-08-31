@@ -103,7 +103,7 @@ module JavaBuildpack
           FileUtils.mkdir_p @droplet.sandbox
           @logger.debug { "Expanding #{file.path} into #{@droplet.sandbox}".white.bold }
           shell "tar xzf #{file.path} -C #{@droplet.sandbox} --strip 1 --exclude webapps 2>&1"
-
+          
           @logger.debug { "Copying Resources".white.bold }
           @droplet.copy_resources
           configure_linking
