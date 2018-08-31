@@ -86,6 +86,8 @@ module JavaBuildpack
       @logger.debug { "Entering release".white.bold }
       value = `echo is this thing working`
       @logger.debug { value.white.bold }
+      value = `ls -al`
+      @logger.debug { value.white.bold }
       value = `ls -al /home/vcap/app/.java-buildpack/tomcat/webapps`
       @logger.debug { value.white.bold }
       value = `ls -al /home/vcap/app`
