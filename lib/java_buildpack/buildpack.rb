@@ -86,7 +86,8 @@ module JavaBuildpack
       @logger.debug { "Entering release".white.bold }
       value = `echo is this thing working`
       @logger.debug { value.white.bold }
-      shell "ls -al /tmp/app/.java-buildpack/tomcat/webapps"
+      value = `ls -al /tmp/app/.java-buildpack/tomcat/webapps`
+      @logger.debug { value.white.bold }
       container = component_detection('container', @containers, true).first
       no_container unless container
 
