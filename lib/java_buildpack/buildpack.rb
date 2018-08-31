@@ -76,8 +76,6 @@ module JavaBuildpack
       container.compile
 
       log_cache_contents
-      shell "echo is this thing working"
-      shell "ls -al /tmp/app/.java-buildpack/tomcat/webapps"
     end
 
     # Generates the payload required to run the application.  The payload format is defined by the
@@ -86,7 +84,8 @@ module JavaBuildpack
     # @return [String] The payload required to run the application.
     def release
       @logger.debug { "Entering release".white.bold }
-
+      shell "echo is this thing working release"
+      shell "ls -al /tmp/app/.java-buildpack/tomcat/webapps"
       container = component_detection('container', @containers, true).first
       no_container unless container
 
