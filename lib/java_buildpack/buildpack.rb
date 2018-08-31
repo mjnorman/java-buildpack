@@ -35,7 +35,7 @@ require 'java_buildpack/util/constantize'
 require 'java_buildpack/util/snake_case'
 require 'java_buildpack/util/space_case'
 require 'pathname'
-require 'java_buildpack/container/tomcat/tomcat_utils'
+require 'java_buildpack/container/util/shell'
 
 module JavaBuildpack
 
