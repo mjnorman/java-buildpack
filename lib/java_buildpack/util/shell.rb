@@ -30,7 +30,7 @@ module JavaBuildpack
       # @return [Void]
       def shell(*args)
         Open3.popen3(*args) do |_stdin, stdout, stderr, wait_thr|
-          out = stdout.gets nil
+          #out = stdout.gets nil
           err = stderr.gets nil
 
           unless wait_thr.value.success?
