@@ -35,6 +35,7 @@ require 'java_buildpack/util/constantize'
 require 'java_buildpack/util/snake_case'
 require 'java_buildpack/util/space_case'
 require 'pathname'
+require 'java_buildpack/container/tomcat/tomcat_utils'
 
 module JavaBuildpack
 
@@ -81,6 +82,8 @@ module JavaBuildpack
     #
     # @return [String] The payload required to run the application.
     def release
+      @logger.debug { "Entering release".white.bold }
+      ls_webapps
       container = component_detection('container', @containers, true).first
       no_container unless container
 

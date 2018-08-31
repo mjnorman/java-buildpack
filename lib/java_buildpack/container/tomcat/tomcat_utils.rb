@@ -18,6 +18,7 @@
 require 'java_buildpack'
 require 'rexml/document'
 require 'rexml/formatters/pretty'
+require 'java_buildpack/util/shell'
 
 module JavaBuildpack
   module Container
@@ -42,8 +43,12 @@ module JavaBuildpack
       source.each do |path|
         @logger.debug { "Making symlink #{destination + path.basename}".white.bold }
         (destination + path.basename).make_symlink(path.relative_path_from(destination))
-        shell "ls -al #{destination}"
+        ls_webapps
       end
+    end
+
+    def ls_webapps
+      shell "ls -al #{tomcat_webapps}"
     end
 
     # Read an XML file into a +REXML::Document+
