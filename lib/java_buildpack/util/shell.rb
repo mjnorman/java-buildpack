@@ -34,7 +34,7 @@ module JavaBuildpack
           #err = stderr.gets nil
 
           Thread.new do 
-            stdout.each { |line| puts l.white.bold }
+            stdout.each { |line| puts line.white.bold }
             
           end
 
